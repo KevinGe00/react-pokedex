@@ -31,10 +31,11 @@ class App extends Component {
       isLoaded: false,
       items: [],
       pokemonNumber: 1,
+      pokemonList: [],
     }
   }
 
-  componentDidMount() {
+  handleClick(){
     fetch("https://pokeapi.co/api/v2/pokemon-form/"+ this.state.pokemonNumber)
       .then(res => res.json())
       .then((result) => {
@@ -43,24 +44,33 @@ class App extends Component {
           isLoaded: true,
           items: result,
           pokePic: result.sprites.front_default,
+          pokemonList: this.state.pokemonList.concat([{name:result.name, image: result.sprites.front_default}]),
+          pokemonNumber: this.state.pokemonNumber+1,
         })
 
       });
-
-
-  }
-
-  handleClick(i){
+  
+}
+  componentDidMount() {
     
+
 
   }
 
   render() {
-    // console.log(this.state.items.version_group);
+
+    const pokemons = this.state.pokemonList;
+    const pokemonCards = pokemons.map((pokemon) => {
+      return (
+        <Card pokePic={pokemon.image} name={pokemon.name} />
+      );
+    });
+
     return (
       <>
-      <Card pokePic={this.state.pokePic} name={this.state.items.name}/>
-      
+      <button onClick={() => this.handleClick()}>Click for next Pokemon</button>
+     {/* {pokemonList} */}
+      <div>{pokemonCards}</div>
       </>
     );
   }
