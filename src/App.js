@@ -19,6 +19,7 @@ class App extends Component {
     fetch("https://pokeapi.co/api/v2/pokemon-form/" + this.state.pokemonNumber)
       .then(res => res.json())
       .then((result) => {
+        console.log(result);
         this.setState({
           isLoaded: true,
           items: result,
@@ -35,7 +36,7 @@ class App extends Component {
     const pokemons = this.state.pokemonList;
     const pokemonCards = pokemons.map((pokemon) => {
       return (
-        <Card pokePic={pokemon.image} name={pokemon.name} />
+        <Card pokePic={pokemon.image} name={pokemon.name}/>
       );
     });
 
